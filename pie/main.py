@@ -32,7 +32,7 @@ def leds():
         else:
             gpio.ouput(int(pin), False)
     index += 1
-    return num_leds
+    return str(num_leds)
 
 # run app
 if __name__ == '__main__':
