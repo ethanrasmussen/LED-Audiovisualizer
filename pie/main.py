@@ -6,6 +6,10 @@ import RPi.GPIO as gpio
 
 # set list of GPIO pin's that make up LED audiovisualizer
 pinlist = [37, 15, 36, 13, 11, 22, 18, 16]
+# set GPIO mode and setup pins
+gpio.setmode(gpio.BOARD)
+for pin in pinlist:
+    gpio.setup(pin, gpio.OUT)
 
 # init Flask app
 app = Flask(__name__)
