@@ -19,7 +19,7 @@ def index():
 @app.route('/leds', methods=['GET'])
 def leds():
     # process arg to get num led's to enable
-    num_leds = request.args.get('num_leds')
+    num_leds = int(request.args.get('num_leds'))
     print(num_leds)
     # if number of led's to set is higher than possible, set to max
     if num_leds > len(pinlist):
