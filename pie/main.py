@@ -7,14 +7,14 @@ from gpiozero import LED
 # set list of GPIO pin's that make up LED audiovisualizer
 #pinlist = [37, 15, 36, 13, 11, 22, 18, 16]
 pinlist = [26, 22, 16, 27, 17, 25, 24, 23]
-leds = []
+lights = []
 
 # set GPIO mode and setup pins
 #gpio.setmode(gpio.BOARD)
 #for pin in pinlist:
     #gpio.setup(pin, gpio.OUT)
 for pin in pinlist:
-    leds.append(LED(pin))
+    lights.append(LED(pin))
 
 # init Flask app
 app = Flask(__name__)
@@ -40,8 +40,8 @@ def leds():
             #gpio.ouput(int(pin), True)
         #else:
             #gpio.ouput(int(pin), False)
-    for led in leds:
-        if index + 1 < len(leds):
+    for led in lights:
+        if index + 1 <= num_leds:
             led.on()
         else:
             led.off()
