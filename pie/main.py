@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import *
 from flask import request
-from pie.gpio_control import set_leds
+import RPi.GPIO as gpio
 
 
 # set list of GPIO pin's that make up LED audiovisualizer
@@ -25,7 +25,13 @@ def leds():
     if num_leds > len(pinlist):
         num_leds = len(pinlist)
     # trigger LEDs
-    set_leds(num_leds, pinlist)
+    index = 0
+    for pin in pinlist:
+        if index + 1 < len(pinlist):
+            gpio.ouput(int(pin), True)
+        else:
+            gpio.ouput(int(pin), False)
+    index += 1
     return num_leds
 
 # run app
