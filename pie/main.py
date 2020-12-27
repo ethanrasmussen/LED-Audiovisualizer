@@ -1,15 +1,20 @@
 from flask import Flask
 from flask import *
 from flask import request
-import RPi.GPIO as gpio
+from gpiozero import LED
 
 
 # set list of GPIO pin's that make up LED audiovisualizer
-pinlist = [37, 15, 36, 13, 11, 22, 18, 16]
+#pinlist = [37, 15, 36, 13, 11, 22, 18, 16]
+pinlist = [26, 22, 16, 27, 17, 25, 24, 23]
+leds = []
+
 # set GPIO mode and setup pins
-gpio.setmode(gpio.BOARD)
+#gpio.setmode(gpio.BOARD)
+#for pin in pinlist:
+    #gpio.setup(pin, gpio.OUT)
 for pin in pinlist:
-    gpio.setup(pin, gpio.OUT)
+    leds.append(LED(pin))
 
 # init Flask app
 app = Flask(__name__)
@@ -30,12 +35,17 @@ def leds():
         num_leds = len(pinlist)
     # trigger LEDs
     index = 0
-    for pin in pinlist:
-        if index + 1 < len(pinlist):
-            gpio.ouput(int(pin), True)
+    #for pin in pinlist:
+        #if index + 1 < len(pinlist):
+            #gpio.ouput(int(pin), True)
+        #else:
+            #gpio.ouput(int(pin), False)
+    for led in leds:
+        if index + 1 < len(leds):
+            led.on()
         else:
-            gpio.ouput(int(pin), False)
-    index += 1
+            led.off()
+        index += 1
     return str(num_leds)
 
 # run app
