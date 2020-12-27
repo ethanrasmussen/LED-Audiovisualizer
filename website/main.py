@@ -1,0 +1,60 @@
+from flask import Flask
+from flask import request
+from flask import *
+from flask_ngrok import run_with_ngrok
+import os
+from werkzeug.utils import secure_filename
+
+
+# init Flask app
+app = Flask(__name__)
+run_with_ngrok(app)
+
+# limit file size for uploads (to 10MB) & must be .wav
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 10
+app.config['UPLOAD_EXTENSIONS'] = ['.wav']
+app.config['UPLOAD_PATH'] = 'audiofiles'
+
+# global vars
+IS_PLAYING = False
+NOW_PLAYING = ""
+
+
+# index/main upload page
+@app.route('/')
+def index():
+    return 'Index!'
+
+# file upload on home page
+@app.route('/', methods=['POST'])
+def upload_audio():
+    audiofile = request.files['file']
+    filename = secure_filename(audiofile.filename)
+    if audiofile.filename != '':
+        file_ext = os.path.splitext(filename)[1]
+        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+            abort(400)
+        audiofile.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+        # set audio as playing
+        NOW_PLAYING = filename
+        IS_PLAYING = True
+    return redirect(url_for('nowplaying'))
+
+# now playing
+@app.route('/nowplaying')
+def nowplaying():
+    return ""
+
+# please wait
+@app.route('/pleasewait')
+def pleasewait():
+    return 'Something is currently playing, please wait!'
+
+
+
+
+# run & get RPi API URL/URI
+if __name__ == '__main__':
+    print("Please enter URL/URI for RPi API:")
+    rpi_api = input()
+    app.run()
