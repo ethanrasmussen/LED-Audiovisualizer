@@ -1,6 +1,7 @@
 # LED Audiovisualizer
 ## Summary:
-![GIF demonstrating audiovisualizer](https://drive.google.com/uc?export=view&id=1jVq34Tla5I_UKwAHjr2YCN34t--xtW5Z)
+![GIF demonstrating audiovisualizer](https://drive.google.com/uc?export=view&id=1jVq34Tla5I_UKwAHjr2YCN34t--xtW5Z)  
+
 This LED Audiovisualizer uses a RPi 2B to sync LED's to music! You can upload your music/audio to a basic website, click submit, and watch it go!
 ## Explanation:
 This LED Audiovisalizer works by running an API on a Raspberry Pi to trigger LED's via the GPIO pins. This API is then called by the webserver/API (ran on a separate server/device) when a file is uploaded & submitted. Upon submission, the audio file will be processed and played through the speakers of the webserver device, while the LED's connected to the Raspberry Pi will be synced to the audio (based on amplitude). The audio-processing function calculates the number of LED's to light up by taking the range of amplitude throughout the audio and calculating a "step value" that plots amplitude values within a range of 1 to 17 LEDs.
