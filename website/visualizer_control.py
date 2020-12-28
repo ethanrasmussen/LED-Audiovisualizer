@@ -39,8 +39,8 @@ def process_audiofile(audiofile_path:str):
     #print((max(amps_normalized) - min(amps_normalized)))
     ###
 
-    # translate normalized amp values to LED values 1-8
-    normalized_step = max(amps_normalized) / 8
+    # translate normalized amp values to LED values 1-17
+    normalized_step = max(amps_normalized) / 17
     led_values = []
     for val in amps_normalized:
         num_leds = int(round(val / normalized_step))
