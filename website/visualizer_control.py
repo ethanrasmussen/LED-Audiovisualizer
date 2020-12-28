@@ -61,7 +61,7 @@ def play_visualizer(audiofile_path:str, led_values, rpi_ip:str):
     for val in led_values:
         r = requests.get(url=f"http://{rpi_ip}/leds?num_leds={val}")
         print(val)
-        time.sleep(0.1)
+        time.sleep(0.04)
     # reset LED's to 0
     r = requests.get(url=f"http://{rpi_ip}/leds?num_leds=0")
     pygame.mixer.music.stop()
