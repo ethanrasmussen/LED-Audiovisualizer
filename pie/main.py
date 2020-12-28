@@ -2,6 +2,8 @@ from flask import Flask
 from flask import *
 from flask import request
 from gpiozero import LED
+from flask import Flask
+from flask_ngrok import run_with_ngrok
 
 
 # set list of GPIO pin's that make up LED audiovisualizer
@@ -18,6 +20,7 @@ for pin in pinlist:
 
 # init Flask app
 app = Flask(__name__)
+run_with_ngrok(app)
 
 # index route
 @app.route('/')
