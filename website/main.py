@@ -12,7 +12,7 @@ app = Flask(__name__)
 run_with_ngrok(app)
 
 # limit file size for uploads (to 10MB) & must be .wav
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 10
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 50
 app.config['UPLOAD_EXTENSIONS'] = ['.wav']
 app.config['UPLOAD_PATH'] = 'audiofiles'
 
@@ -43,7 +43,7 @@ def upload_audio():
         IS_PLAYING = True
         # process audio & trigger LEDs
         led_values = vc.process_audiofile(f"audiofiles/{filename}")
-        vc.play_visualizer(filename, led_values, RPI_API)
+        vc.play_visualizer(f"audiofiles/{filename}", led_values, RPI_API)
     return redirect(url_for('nowplaying'))
 
 # now playing

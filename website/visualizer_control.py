@@ -26,17 +26,17 @@ def process_audiofile(audiofile_path:str):
         normalized_val = value + abs(min(amps))
         amps_normalized.append(normalized_val)
 
-    # TODO: REMOVE THIS SECTION AFTER TESTING
-    print("AMPS:")
-    print(amps)
-    print(min(amps))
-    print(max(amps))
-    print((max(amps) - min(amps)))
-    print("NORMALIZED:")
-    print(amps_normalized)
-    print(min(amps_normalized))
-    print(max(amps_normalized))
-    print((max(amps_normalized) - min(amps_normalized)))
+    ###
+    #print("AMPS:")
+    #print(amps)
+    #print(min(amps))
+    #print(max(amps))
+    #print((max(amps) - min(amps)))
+    #print("NORMALIZED:")
+    #print(amps_normalized)
+    #print(min(amps_normalized))
+    #print(max(amps_normalized))
+    #print((max(amps_normalized) - min(amps_normalized)))
     ###
 
     # translate normalized amp values to LED values 1-8
@@ -45,19 +45,20 @@ def process_audiofile(audiofile_path:str):
     for val in amps_normalized:
         num_leds = int(round(val / normalized_step))
         led_values.append(num_leds)
-    print("LED VALUES:")
-    print(led_values)
+    #print("LED VALUES:")
+    #print(led_values)
     return led_values
 
 
 # play audio on PC/server & trigger LEDs
 def play_visualizer(audiofile_path:str, led_values, rpi_ip:str):
+    print(f"Playing {audiofile_path} . . . ")
     # play audio on local speaker
     pygame.mixer.init()
     pygame.mixer.music.load(audiofile_path)
     pygame.mixer.music.play()
     # send LED values to RPi API & trigger visualizer
     for val in led_values:
-        r = requests.get(url=f"{rpi_ip}/leds?num_leds={val}")
+        r = requests.get(url=f"http://{rpi_ip}/leds?num_leds={val}")
         print(val)
         time.sleep(0.1)
