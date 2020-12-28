@@ -4,6 +4,7 @@ from flask import *
 from flask_ngrok import run_with_ngrok
 import os
 from werkzeug.utils import secure_filename
+import website.visualizer_control as vc
 
 
 # init Flask app
@@ -18,12 +19,14 @@ app.config['UPLOAD_PATH'] = 'audiofiles'
 # global vars
 IS_PLAYING = False
 NOW_PLAYING = ""
+RPI_API = None
 
 
 # index/main upload page
 @app.route('/')
 def index():
-    return 'Index!'
+    files = os.listdir(app.config['UPLOAD_PATH'])
+    return render_template('index.html', files=files)
 
 # file upload on home page
 @app.route('/', methods=['POST'])
@@ -38,12 +41,18 @@ def upload_audio():
         # set audio as playing
         NOW_PLAYING = filename
         IS_PLAYING = True
+        # process audio & trigger LEDs
+        led_values = vc.process_audiofile(f"audiofiles/{filename}")
+        vc.play_visualizer(filename, led_values, RPI_API)
     return redirect(url_for('nowplaying'))
 
 # now playing
 @app.route('/nowplaying')
 def nowplaying():
-    return ""
+    if IS_PLAYING:
+        return NOW_PLAYING
+    else:
+        return "Nothing is playing right now!"
 
 # please wait
 @app.route('/pleasewait')
@@ -56,5 +65,5 @@ def pleasewait():
 # run & get RPi API URL/URI
 if __name__ == '__main__':
     print("Please enter URL/URI for RPi API:")
-    rpi_api = input()
+    RPI_API = input()
     app.run()
