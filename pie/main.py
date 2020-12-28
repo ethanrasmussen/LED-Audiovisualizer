@@ -8,7 +8,8 @@ from flask import Flask
 
 # set list of GPIO pin's that make up LED audiovisualizer
 #pinlist = [37, 15, 36, 13, 11, 22, 18, 16]
-pinlist = [26, 22, 16, 27, 17, 25, 24, 23]
+#pinlist = [26, 22, 16, 27, 17, 25, 24, 23]
+pinlist = [26, 21, 20, 19, 16, 13, 6, 12, 11, 7, 25, 24, 22, 23, 27, 17, 18]
 lights = []
 
 # set GPIO mode and setup pins
