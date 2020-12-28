@@ -14,12 +14,13 @@ def process_audiofile(audiofile_path:str):
                                      offset=0.0,
                                      duration=50,
                                      res_type='kaiser_best')
-    # get amplitude every 1/10 sec
+    # get amplitude every 1/7 sec (originally 1/10 sec)
     amps = []
     index = 0
-    while len(amps) <= 490:
+    #while len(amps) <= 490:
+    while len(amps) <= 343:
         amps.append(data[index])
-        index += int(sample_rate / 10)
+        index += int(sample_rate / 7)
     # normalize amp data to all be positive
     amps_normalized = []
     for value in amps:
