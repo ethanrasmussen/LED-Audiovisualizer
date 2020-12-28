@@ -62,3 +62,4 @@ def play_visualizer(audiofile_path:str, led_values, rpi_ip:str):
         r = requests.get(url=f"http://{rpi_ip}/leds?num_leds={val}")
         print(val)
         time.sleep(0.1)
+    pygame.mixer.music.stop()

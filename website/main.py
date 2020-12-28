@@ -39,11 +39,12 @@ def upload_audio():
             abort(400)
         audiofile.save(os.path.join(app.config['UPLOAD_PATH'], filename))
         # set audio as playing
-        NOW_PLAYING = filename
+        NOW_PLAYING = str(filename)
         IS_PLAYING = True
         # process audio & trigger LEDs
         led_values = vc.process_audiofile(f"audiofiles/{filename}")
         vc.play_visualizer(f"audiofiles/{filename}", led_values, RPI_API)
+    IS_PLAYING = False
     return redirect(url_for('nowplaying'))
 
 # now playing
